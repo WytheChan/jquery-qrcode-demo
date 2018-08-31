@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jquery-qrcode-demo</title>
+
+    <!-- css start -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- css end -->
+
+    <style lang="">
+        #qrcode{
+            margin: 50px;
+            width: 200px;
+        }
+        #qrcode img{
+            width: 100%;
+        }
+        #qrcode-logo{
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="qrcode"></div>
+    <img src="img/loading.png" alt="" id="qrcode-logo">
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-qrcode-0.14.0.js"></script>
+    <script>
+
+        $(function(){
+            var url = 'https://www.baidu.com';
+
+            var options = {};
+            options.url = url; //二维码的链接
+            options.dom = "#qrcode"; //二维码生成的位置
+            options.image = document.getElementById('qrcode-logo'); //图片id
+            options.render = "image"; //设置生成的二维码是canvas格式，也有image、div格式
+            xyqrcode(options);
+        })
+
+        function xyqrcode(options) {
+            var settings = {
+                dom: '',
+                render: 'canvas', //生成二维码的格式还有image、div
+                ecLevel: "H",
+                text: "",
+                background: "#ffffff",
+                fill: "#333333", //二维码纹路的颜色
+                fontcolor: "#ff9818",
+                fontname: "Ubuntu",
+                image: {},
+                label: "",
+                mPosX: 0.5, //图片在X轴的位置
+                mPosY: 0.5, //图片在X轴的位置
+                mSize: 0.27, //图片大小
+                minVersion: 10,
+                mode: 4,
+                quiet: 1,
+                radius: 1,
+                size: 400
+            };
+            if (options) {
+                $.extend(settings, options); //options对象跟settings比较，相同的就替换，没有的就添加
+
+            }
+            if (settings.dom.length == 0) {
+                window.console.log("Error: dom empty!");
+                return;
+            }
+            if (settings.url.length == 0) {
+                window.console.log("Error: url empty!");
+                return;
+            }
+            settings.text = settings.url; //在qrcode生成二维码的地址是text。这里就把url赋值给text
+            $(settings.dom).qrcode(settings);
+
+        }
+    </script>
+</body>
+
+</html>
